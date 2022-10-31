@@ -1,6 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import Black from "./black.jpg";
+import Red from "./red.jpg";
+import Blue from "./blue.jpg";
+import Yellow from "./yellow.jpg";
 
 import reportWebVitals from "./reportWebVitals";
 
@@ -16,9 +20,9 @@ class Car extends React.Component {
     this.state = {
       brand: "Opel",
       model: "Astra",
-      color: "red",
+      color: "Red",
       year: 2020,
-      colors: ["red", "blue", "yellow", "black"],
+      colors: ["Red", "Blue", "Yellow", "Black"],
     };
   }
 
@@ -43,31 +47,60 @@ class Car extends React.Component {
   }
 
   render() {
+    var imageURL = "";
+
+    // get proper image
+
+    if (this.state.color === "Black") {
+      imageURL = Black;
+    } else if (this.state.color === "Red") {
+      imageURL = Red;
+    } else if (this.state.color === "Yellow") {
+      imageURL = Yellow;
+    } else if (this.state.color === "Blue") {
+      imageURL = Blue;
+    }
+
     return (
       <div>
-        <h1>
-          {this.state.brand} {this.state.model}
-        </h1>
-        <div>
-          <select onChange={this.changeColorr}>
-            {this.state.colors.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous"
+        />
+        <div className="container">
+          <div className="row">
+            <div className="col-4">
+              <img className="img-fluid" src={imageURL} alt="" />
+            </div>
+            <div className="col-8">
+              <h1>
+                {this.state.brand} {this.state.model}
+              </h1>
+              <div>
+                <select onChange={this.changeColorr}>
+                  {this.state.colors.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                {this.state.colors.map((item) => (
+                  <button key={item} onClick={() => this.changeColor2(item)}>
+                    {item}
+                  </button>
+                ))}
+              </div>
+              <p>
+                Selected Color: <b>{this.state.color}</b>
+              </p>
+              <button onClick={this.changeColorRandom}>Change Color</button>
+            </div>
+          </div>
         </div>
-        <div>
-          {this.state.colors.map((item) => (
-            <button key={item} onClick={() => this.changeColor2(item)}>
-              {item}
-            </button>
-          ))}
-        </div>
-        <p>
-          Selected Color: <b>{this.state.color}</b>
-        </p>
-        <button onClick={this.changeColorRandom}>Change Color</button>
       </div>
     );
   }
